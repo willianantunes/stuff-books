@@ -6,6 +6,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+import br.com.casadocodigo.configuracao.web.RequestMappingPaths;
+
 @EnableWebSecurity
 public class ConfiguracaoDeSeguranca {
 
@@ -17,7 +19,7 @@ public class ConfiguracaoDeSeguranca {
 			http
 				.authorizeRequests()
 					.anyRequest().authenticated().and()
-				.antMatcher("/api/livros")
+				.antMatcher(RequestMappingPaths.API_LIVROS)
 					.httpBasic().and()
 				// Não é necessário proteção contra ataques CSRF pois as APIs da aplicação 
 				// são stateless, ou seja, não utilizam o conceito de sessão.
