@@ -16,13 +16,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.google.common.collect.ImmutableMap;
 
-import br.com.casadocodigo.livros.Livro;
 import br.com.casadocodigo.usuarios.Usuario;
-import br.com.casadocodigo.usuarios.UsuarioRepository;
+import br.com.casadocodigo.usuarios.UsuariosRepository;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackageClasses = { UsuarioRepository.class })
+@EnableJpaRepositories(basePackageClasses = { UsuariosRepository.class })
 public class DatabaseConfiguration {
 	@Value("${database.url}")
 	private String urlDataSource;
@@ -47,7 +46,7 @@ public class DatabaseConfiguration {
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory(EntityManagerFactoryBuilder builder, DataSource dataSource) {
 		return builder.dataSource(dataSource)
-				.packages(Usuario.class, Livro.class)
+				.packages(Usuario.class)
 				.persistenceUnit("oauth")
 				.properties(ImmutableMap.of("hibernate.dialect", org.hibernate.dialect.H2Dialect.class.getName()))
 				.build();
