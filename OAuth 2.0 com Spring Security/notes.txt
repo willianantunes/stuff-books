@@ -1,0 +1,14 @@
+######################
+###################### Capítulo 3
+
+############## Download dos exemplos
+https://github.com/adolfoweloy/livro-spring-oauth2
+
+############## Como a versão contida no livro é antiga é usa MySQL em vez de um banco em memória... Comando abaixo executar com JBoss Forge
+project-new --named book-server --type jar --top-level-package br.com.casadocodigo
+
+###################### Capítulo 4
+
+############## Teste da API
+############## Cadastre um usuário e adicione um livro na estante
+curl -X GET --user gregorio@gmail.com:123 "http://localhost:8080/api/livros"
