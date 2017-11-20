@@ -47,7 +47,7 @@ public class DatabaseConfiguration {
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory(EntityManagerFactoryBuilder builder, DataSource dataSource) {
 		return builder.dataSource(dataSource)
 				.packages(Usuario.class)
-				.persistenceUnit("oauth")
+				.persistenceUnit("client")
 				.properties(ImmutableMap.of("hibernate.dialect", org.hibernate.dialect.H2Dialect.class.getName()))
 				.build();
 	}

@@ -10,12 +10,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.casadocodigo.configuracao.seguranca.ResourceOwner;
+import br.com.casadocodigo.configuracao.web.RequestMappingPaths;
 import br.com.casadocodigo.livros.Estante;
 import br.com.casadocodigo.usuarios.Usuario;
 import br.com.casadocodigo.usuarios.UsuarioRepository;
 
 @RestController
-@RequestMapping("/api/livros")
+@RequestMapping({ RequestMappingPaths.API_LIVROS, RequestMappingPaths.API_V2_LIVROS })
 public class LivrosApiController {
 
     @Autowired
