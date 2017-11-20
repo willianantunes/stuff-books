@@ -12,3 +12,23 @@ project-new --named book-server --type jar --top-level-package br.com.casadocodi
 ############## Teste da API
 ############## Cadastre um usuário e adicione um livro na estante
 curl -X GET --user gregorio@gmail.com:123 "http://localhost:8080/api/livros"
+
+###################### Capítulo 7
+
+############## Teste de autenticação (ver classe ConfiguracaoOAuth2 no projeto book-server)
+############## Veja que estamos solicitando acesso aos recursos do usuário gregorio@gmail.com (necessário cadastro prévio)
+
+curl -X POST -H "Authorization: Basic Y2xpZW50ZS1hcHA6MTIzNDU2" \
+-H "Content-Type: application/x-www-form-urlencoded" \
+-H "Accept: application/json" \
+-d 'grant_type=password&username=gregorio@gmail.com&password=123&scope=read write' \
+"http://localhost:8080/oauth/token"
+
+############## Retorno abaixo lembrando que Bearer significa que o token de acesso pode ser usado por qualquer Client e o expires_in corresponde o tempo total de vida do token de acesso retornado em segundos.
+
+{"access_token":"21c74d1b-d36e-40af-abfe-3e1a514ddef7","token_type":"bearer","expires_in":43199,"scope":"read write"}
+
+############## Exemplo de utilização
+curl -i -X GET -H "Authorization: Bearer 1f1824d6-b438-4a5b-ae9d-01d0b9ab190d" "http://localhost:8080/api/v2/livros"
+
+## Um detalhe é que para funcionar tive que tirar a versão 1.5.8.RELEASE e deixar 1.4.7.RELEASE do Spring Boot. Depurando vi que um erro acontece durante a utilização de origem desconhecida (famoso Unknown Source).
