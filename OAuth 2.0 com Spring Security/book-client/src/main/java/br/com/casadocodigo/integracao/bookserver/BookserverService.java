@@ -14,7 +14,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import br.com.casadocodigo.configuracao.seguranca.BasicAuthentication;
 import br.com.casadocodigo.integracao.model.Livro;
 
 @Service
@@ -23,11 +22,11 @@ public class BookserverService {
 	@Value("${endpoint.api-livros}")
 	private String endpoint;
 
-    public List<Livro> livros(BasicAuthentication credenciais) throws UsuarioSemAutorizacaoException {
+    public List<Livro> livros(String token) throws UsuarioSemAutorizacaoException {
         RestTemplate restTemplate = new RestTemplate();
 
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
-        headers.add("Authorization", "Basic " + credenciais.getCredenciaisBase64());
+        headers.add("Authorization", "Bearer " + token);
 
         RequestEntity<Object> request = new RequestEntity<>(
             headers,

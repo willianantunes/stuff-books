@@ -26,4 +26,8 @@ database:
     user: sa
     password: 
     
-endpoint.api-livros: http://localhost:8080/api/livros    
+endpoint.api-livros: http://localhost:8080/api/v2/livros
+endpoint.oauth-token: http://localhost:8080/oauth/token
+  
+oauth.client-id: cliente-app
+oauth.client-secret: 123456 
