@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.casadocodigo.configuracao.seguranca.UsuarioLogado;
+import br.com.casadocodigo.integracao.bookserver.AuthorizationCodeTokenService;
 import br.com.casadocodigo.integracao.bookserver.OAuth2Token;
 import br.com.casadocodigo.integracao.bookserver.PasswordTokenService;
 import br.com.casadocodigo.usuarios.AcessoBookserver;
@@ -23,27 +24,50 @@ public class IntegracaoController {
     private UsuariosRepository usuarios;
     
     @Autowired
-    private PasswordTokenService tokenService;
+    private PasswordTokenService passwordTokenService;
+    
+	@Autowired
+	private	AuthorizationCodeTokenService authorizationCodeTokenService;    
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView integracao() {
-        return new ModelAndView("minhaconta/integracao");
+        // Caso para quando for testar grant type password: return new ModelAndView("minhaconta/integracao");
+    	
+    	String authorizationEndpoint = authorizationCodeTokenService.getAuthorizationEndpoint();    	
+		return new ModelAndView("redirect:" + authorizationEndpoint);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView autorizar(Autorizacao autorizacao) {
+//	  // Caso para quando for testar grant type password    
+//    @RequestMapping(method = RequestMethod.POST)
+//    public ModelAndView autorizar(Autorizacao autorizacao) {
+//
+//    	Usuario usuario = usuarioLogado();
+//    	OAuth2Token token = passwordTokenService.getToken(usuario.getLogin(), usuario.getSenha());
+//
+//    	AcessoBookserver acessoBookserver = new AcessoBookserver();
+//    	acessoBookserver.setAccessToken(token.getAccessToken());
+//        usuario.setAcessoBookserver(acessoBookserver);
+//
+//        usuarios.save(usuario);
+//
+//        return new ModelAndView("redirect:/minhaconta/principal");
+//    }
+    
+    @RequestMapping(value = "/callback", method = RequestMethod.GET)
+    public ModelAndView callback(String code, String state) {
 
-    	Usuario usuario = usuarioLogado();
-    	OAuth2Token token = tokenService.getToken(usuario.getLogin(), usuario.getSenha());
+        OAuth2Token token = authorizationCodeTokenService.getToken(code);
 
-    	AcessoBookserver acessoBookserver = new AcessoBookserver();
-    	acessoBookserver.setAccessToken(token.getAccessToken());
+        AcessoBookserver acessoBookserver = new AcessoBookserver();
+        acessoBookserver.setAccessToken(token.getAccessToken());
+
+        Usuario usuario = usuarioLogado();
         usuario.setAcessoBookserver(acessoBookserver);
 
         usuarios.save(usuario);
 
         return new ModelAndView("redirect:/minhaconta/principal");
-    }
+    } 
 
     private Usuario usuarioLogado() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
