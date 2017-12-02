@@ -41,7 +41,13 @@ public class ConfiguracaoOAuth2 {
 				.authorizeRequests()
 					.anyRequest().authenticated().and()
 				.requestMatchers()
-					.antMatchers(RequestMappingPaths.API_V2_LIVROS);
+					.antMatchers(RequestMappingPaths.API_V2_LIVROS).and()
+				/** 
+				 * Como a aplicação client executa chamadas Ajax a partir de outro domínio, é 
+				 * necessário habilitar CORS pois é justamente um exemplo de requisição cross domain.
+				 * https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS 
+				 */					
+				.cors();
 		}
 	}
 
@@ -67,8 +73,9 @@ public class ConfiguracaoOAuth2 {
 			clients.inMemory()
 				.withClient("cliente-app")
 				.secret("123456")
-				// Indica que estamos adicionando suporte para o grant type Resource Owner Password Credential e Authorization Code
-				.authorizedGrantTypes("password", "authorization_code")
+				// Indica que estamos adicionando suporte para o grant type Resource Owner Password Credential e Authorization Code e Implicit
+				// Note que para o caso do implicit a especificação diz que é obrigatório registrar URI de redirecionamento, em um sistema real é mais que obrigatório
+				.authorizedGrantTypes("password", "authorization_code", "implicit")
 				// Indica que o Client solicita acesso de leitura e escrita nos recursos do usuário
 				.scopes("read",	"write")
 				.resourceIds(RESOURCE_ID);

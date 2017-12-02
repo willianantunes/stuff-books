@@ -68,3 +68,14 @@ curl -X GET -H "Authorization: Bearer 8e32b628-d420-43e2-a2c5-9e6163ad790a" "htt
 ## Retorno
 
 [{"id":1,"titulo":"On The Road","nota":10}]
+
+###################### Capítulo 10 - Uso na prática do grant type Implicit. Ver figura 10.1
+
+############## O fragmento de URL pode ser recuperado da seguinte forma através de código JavaScript:
+
+var fragment = window.location.hash;
+
+############## Como agora temos uma única etapa para obter o token, segue um exemplo de solicitação de forma implícita
+http://localhost:8080/oauth/authorize?response_type=token&redirect_uri=http%3A%2F%2Flocalhost%3A9000%2Fimplicit&client_id=cliente-app&scope=read+write&state=teste
+############## Exemplo de retorno no teste para o client solicitante
+http://localhost:9000/implicit#access_token=c674bced-e003-46cd-8e9c-1b494c6a92dc&token_type=bearer&state=teste&expires_in=43200

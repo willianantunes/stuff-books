@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import br.com.casadocodigo.configuracao.seguranca.UsuarioLogado;
 import br.com.casadocodigo.integracao.bookserver.AuthorizationCodeTokenService;
+import br.com.casadocodigo.integracao.bookserver.ImplicitTokenService;
 import br.com.casadocodigo.integracao.bookserver.OAuth2Token;
 import br.com.casadocodigo.integracao.bookserver.PasswordTokenService;
 import br.com.casadocodigo.usuarios.AcessoBookserver;
@@ -25,17 +26,35 @@ public class IntegracaoController {
     
     @Autowired
     private PasswordTokenService passwordTokenService;
-    
-	@Autowired
-	private	AuthorizationCodeTokenService authorizationCodeTokenService;    
 
+	@Autowired
+	private AuthorizationCodeTokenService authorizationCodeTokenService;
+
+	@Autowired
+	private ImplicitTokenService implicitTokenService;	
+
+	// Caso para quando for testar grant type Authorization Code
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView integracao() {
         // Caso para quando for testar grant type password: return new ModelAndView("minhaconta/integracao");
     	
-    	String authorizationEndpoint = authorizationCodeTokenService.getAuthorizationEndpoint();    	
+    	String authorizationEndpoint = implicitTokenService.getAuthorizationEndpoint();    	
 		return new ModelAndView("redirect:" + authorizationEndpoint);
-    }
+    }	
+
+	@RequestMapping(value = "/implicit", method = RequestMethod.GET)
+	public ModelAndView implicit() {
+		return new ModelAndView("minhaconta/bookserver");
+	}
+
+//	  // Caso para quando for testar grant type Authorization Code
+//    @RequestMapping(method = RequestMethod.GET)
+//    public ModelAndView integracao() {
+//        // Caso para quando for testar grant type password: return new ModelAndView("minhaconta/integracao");
+//    	
+//    	String authorizationEndpoint = authorizationCodeTokenService.getAuthorizationEndpoint();    	
+//		return new ModelAndView("redirect:" + authorizationEndpoint);
+//    }
 
 //	  // Caso para quando for testar grant type password    
 //    @RequestMapping(method = RequestMethod.POST)
