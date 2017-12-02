@@ -19,7 +19,7 @@ public class ConfiguracaoOAuth2 {
 	public static final String RESOURCE_ID = "books";
 
 	/**
-	 * Responsabilidades e alguns detalhes:
+	 * Responsabilidades e alguns detalhes do Resource Server:
 	 * <ul>
 	 * <li>Responsável por validar se o Client que está tentando acessar os recursos do usuário tem ou não as permissões necessárias</li>
 	 * <li>Para validar o token fornecido pelo Client pode interagir com o Authorization Server ao acessar um banco de dados 
@@ -49,7 +49,7 @@ public class ConfiguracaoOAuth2 {
 	 * Responsabilidades de um Authorization Server:
 	 * <ul>
 	 * <li>Permitir que o usuário autorize o acesso aos seus recursos sem precisar passar suas credenciais para o Client.</li>
-	 * <li>Permitira geração do token de acesso através do fluxo de obtenção do token de acesso (grant type).</li>
+	 * <li>Permitir a geração do token de acesso através do fluxo de obtenção do token de acesso (grant type).</li>
 	 * </ul>
 	 * A anotação <i>EnableAuthorizationServer</i> cria os seguintes endpoints:
 	 * <ul>
@@ -67,8 +67,8 @@ public class ConfiguracaoOAuth2 {
 			clients.inMemory()
 				.withClient("cliente-app")
 				.secret("123456")
-				// Indica que estamos adicionando suporte para o grant type Resource Owner Password Credential
-				.authorizedGrantTypes("password")
+				// Indica que estamos adicionando suporte para o grant type Resource Owner Password Credential e Authorization Code
+				.authorizedGrantTypes("password", "authorization_code")
 				// Indica que o Client solicita acesso de leitura e escrita nos recursos do usuário
 				.scopes("read",	"write")
 				.resourceIds(RESOURCE_ID);

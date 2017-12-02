@@ -13,7 +13,7 @@ project-new --named book-server --type jar --top-level-package br.com.casadocodi
 ############## Cadastre um usuário e adicione um livro na estante
 curl -X GET --user gregorio@gmail.com:123 "http://localhost:8080/api/livros"
 
-###################### Capítulo 7
+###################### Capítulo 7 - Uso na prática do grant type Resource Owner Password Credentials. Ver figura 7.1
 
 ############## Teste de autenticação (ver classe ConfiguracaoOAuth2 no projeto book-server)
 ############## Veja que estamos solicitando acesso aos recursos do usuário gregorio@gmail.com (necessário cadastro prévio)
@@ -29,6 +29,42 @@ curl -X POST -H "Authorization: Basic Y2xpZW50ZS1hcHA6MTIzNDU2" \
 {"access_token":"21c74d1b-d36e-40af-abfe-3e1a514ddef7","token_type":"bearer","expires_in":43199,"scope":"read write"}
 
 ############## Exemplo de utilização
+
 curl -i -X GET -H "Authorization: Bearer 1f1824d6-b438-4a5b-ae9d-01d0b9ab190d" "http://localhost:8080/api/v2/livros"
 
 ## Um detalhe é que para funcionar tive que tirar a versão 1.5.8.RELEASE e deixar 1.4.7.RELEASE do Spring Boot. Depurando vi que um erro acontece durante a utilização de origem desconhecida (famoso Unknown Source).
+
+###################### Capítulo 9 - Uso na prática do grant type Authorization Code (modelo clássico onde o usuário aceita no Authorization Server compartilhar determinados recursos). Ver figura 9.1
+
+############## Redirecionamento para a tela de autorização no Authorization Server
+http://localhost:8080/oauth/authorize?client_id=cliente-app&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A9000%2Fcallback
+############## Exemplo de retorno no teste para o client solicitante
+http://localhost:9000/callback?code=8ySyMd
+
+############## Exemplo passando o parâmetro state (CSRF)
+############## OBSERVAÇÃO IMPORTANTE: Usando state não conseguir o token de acesso, segui o exemplo do livro e segui alternativas (como colocar como query string) e não funcionou. Nota para TSHOOT depois...
+http://localhost:8080/oauth/authorize?client_id=cliente-app&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A9000%2Fcallback%3Fstate%3Dteste-para-csrf
+############## Exemplo de retorno no teste para o client solicitante
+http://localhost:9000/callback?state=teste-para-csrf&code=7fuF69
+############## Exemplo de retorno quando Resource Owner nega acesso a tudo para o client solicitante
+http://localhost:9000/callback&state=teste-para-csrf?error=access_denied&error_description=User%20denied%20access
+
+############## Teste para avaliar se o token de acesso é gerado corretamente com o que foi retornado
+
+## "cliente-app:123456" em Base 64: Y2xpZW50ZS1hcHA6MTIzNDU2
+
+curl -X POST -H "Authorization: Basic Y2xpZW50ZS1hcHA6MTIzNDU2" \
+-H "Content-Type: application/x-www-form-urlencoded" \
+-d "grant_type=authorization_code&redirect_uri=http://localhost:9000/callback&scope=read write&code=8ySyMd" "http://localhost:8080/oauth/token"
+
+## Retorno
+
+{"access_token":"8e32b628-d420-43e2-a2c5-9e6163ad790a","token_type":"bearer","expires_in":43199,"scope":"read write"}
+
+## Utilização do token recebido para obter os livros
+
+curl -X GET -H "Authorization: Bearer 8e32b628-d420-43e2-a2c5-9e6163ad790a" "http://localhost:8080/api/v2/livros"
+
+## Retorno
+
+[{"id":1,"titulo":"On The Road","nota":10}]
