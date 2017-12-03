@@ -96,3 +96,41 @@ curl -X POST -H "Content-Type: application/x-www-form-urlencoded" \
 ############## Consulta na API já usando o token recebido
 
 curl -i -X GET -H "Authorization: Bearer d691bef9-e9f3-4744-beda-49ae7df66896" "http://localhost:8080/api/v2/admin/total_livros"
+
+###################### Capítulo 12 - Refresh Tokens
+
+############## Faça cadastro de um usuário qualquer no server e acesso o link
+http://localhost:8080/oauth/authorize?client_id=cliente-app&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A9000%2Fcallback
+############## Use o código retornado
+http://localhost:9000/callback?code=3R5DxC
+############## Testando para ver se o refresh token retorna
+curl -X POST -H "Authorization: Basic Y2xpZW50ZS1hcHA6MTIzNDU2" \
+-H "Content-Type: application/x-www-form-urlencoded" \
+-d "grant_type=authorization_code&redirect_uri=http://localhost:9000/callback&scope=read write&code=3R5DxC" \
+"http://localhost:8080/oauth/token"
+############## Retorno
+{"access_token":"cd5d43c8-ec0d-44c1-be9c-8e150cb11792","token_type":"bearer","refresh_token":"0a7f32c5-4be4-4a97-bb0a-b358101bdf85","expires_in":119,"scope":"read write"}
+
+############## Obtenção de novo token com o refresh_token
+curl -X POST --user cliente-app:123456 \
+-d 'grant_type=refresh_token&refresh_token=0a7f32c5-4be4-4a97-bb0a-b358101bdf85&scope=read write' \
+"http://localhost:8080/oauth/token"
+############## Retorno... Repare que o refresh_token é igual ao anteriormente recebido
+{"access_token":"80debe75-b783-40ae-bef9-d202483e9495","token_type":"bearer","refresh_token":"0a7f32c5-4be4-4a97-bb0a-b358101bdf85","expires_in":119,"scope":"read write"}
+
+##############  Testando acesso em um método que permita acesso a quem possua escopo de acesso read. Acesso o link abaixo e permita apenas write (necessário cadastro prévio de usuário no bookserver)
+http://localhost:8080/oauth/authorize?client_id=cliente-app&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A9000%2Fcallback
+############## Use o código retornado
+http://localhost:9000/callback?code=SIhRRe
+############## Teste para obter token de acesso
+curl -i -X POST -H "Authorization: Basic Y2xpZW50ZS1hcHA6MTIzNDU2" \
+-H "Content-Type: application/x-www-form-urlencoded" \
+-d "grant_type=authorization_code&redirect_uri=http://localhost:9000/callback&scope=read write&code=SIhRRe" \
+"http://localhost:8080/oauth/token"
+############## Veja que embora tenha pedido escopos "read write", o retorno enfatiza que só write é permitido
+{"access_token":"81a05e5e-fd1c-4cd0-bbb3-4dbb158edfb3","token_type":"bearer","refresh_token":"801f854b-635e-4173-9413-a56ba5af145c","expires_in":119,"scope":"write"}
+############## Tentativa de executar uma chamada em um serviço ofertado apenas para quem possua escopo read
+curl -i -X GET -H "Authorization: Bearer 81a05e5e-fd1c-4cd0-bbb3-4dbb158edfb3" "http://localhost:8080/api/v2/livros"
+############## Retorna 403 com a seguinte mensagem
+{"error":"access_denied","error_description":"Access is denied"}
+
