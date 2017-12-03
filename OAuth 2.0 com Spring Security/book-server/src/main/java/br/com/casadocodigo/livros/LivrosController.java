@@ -34,7 +34,7 @@ public class LivrosController {
 
 	@RequestMapping(value = "/principal", method = RequestMethod.POST)
 	public ModelAndView adicionarLivro(@Valid DadosDoLivro dadosDoLivro, BindingResult bindingResult) {
-		ModelAndView mv = new ModelAndView("livros/principal");
+		ModelAndView mv = new ModelAndView("redirect:/livros/principal");
 
 		Usuario usuario = donoDosLivros();
 

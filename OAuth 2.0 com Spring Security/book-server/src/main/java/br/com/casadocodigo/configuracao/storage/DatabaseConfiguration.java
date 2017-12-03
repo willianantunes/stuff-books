@@ -17,12 +17,13 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.google.common.collect.ImmutableMap;
 
 import br.com.casadocodigo.livros.Livro;
+import br.com.casadocodigo.livros.LivroRepository;
 import br.com.casadocodigo.usuarios.Usuario;
 import br.com.casadocodigo.usuarios.UsuarioRepository;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackageClasses = { UsuarioRepository.class })
+@EnableJpaRepositories(basePackageClasses = { UsuarioRepository.class, LivroRepository.class })
 public class DatabaseConfiguration {
 	@Value("${database.url}")
 	private String urlDataSource;

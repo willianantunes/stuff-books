@@ -41,7 +41,7 @@ public class ConfiguracaoOAuth2 {
 				.authorizeRequests()
 					.anyRequest().authenticated().and()
 				.requestMatchers()
-					.antMatchers(RequestMappingPaths.API_V2_LIVROS).and()
+					.antMatchers(RequestMappingPaths.API_V2_LIVROS, RequestMappingPaths.API_V2_ADMIN_LIVROS + "/**").and()
 				/** 
 				 * Como a aplicação client executa chamadas Ajax a partir de outro domínio, é 
 				 * necessário habilitar CORS pois é justamente um exemplo de requisição cross domain.
@@ -78,6 +78,12 @@ public class ConfiguracaoOAuth2 {
 				.authorizedGrantTypes("password", "authorization_code", "implicit")
 				// Indica que o Client solicita acesso de leitura e escrita nos recursos do usuário
 				.scopes("read",	"write")
+				.resourceIds(RESOURCE_ID)
+			.and()
+				.withClient("cliente-admin")
+				.secret("123abc")
+				.authorizedGrantTypes("client_credentials")
+				.scopes("read")
 				.resourceIds(RESOURCE_ID);
 		}
 		
