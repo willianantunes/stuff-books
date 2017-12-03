@@ -79,3 +79,20 @@ var fragment = window.location.hash;
 http://localhost:8080/oauth/authorize?response_type=token&redirect_uri=http%3A%2F%2Flocalhost%3A9000%2Fimplicit&client_id=cliente-app&scope=read+write&state=teste
 ############## Exemplo de retorno no teste para o client solicitante
 http://localhost:9000/implicit#access_token=c674bced-e003-46cd-8e9c-1b494c6a92dc&token_type=bearer&state=teste&expires_in=43200
+
+###################### Capítulo 11 - Uso na prática do grant type Client Credentials. Ver figura 11.1
+
+############## Exemplo de solicitação
+############## cliente-admin:123abc é o mesmo que Y2xpZW50ZS1hZG1pbjoxMjNhYmM
+
+curl -X POST -H "Content-Type: application/x-www-form-urlencoded" \
+-H "Authorization: Basic Y2xpZW50ZS1hZG1pbjoxMjNhYmM=" \
+-d 'grant_type=client_credentials' "http://localhost:8080/oauth/token"
+
+## Retorno
+
+{"access_token":"d691bef9-e9f3-4744-beda-49ae7df66896","token_type":"bearer","expires_in":43199,"scope":"read"}
+
+############## Consulta na API já usando o token recebido
+
+curl -i -X GET -H "Authorization: Bearer d691bef9-e9f3-4744-beda-49ae7df66896" "http://localhost:8080/api/v2/admin/total_livros"
