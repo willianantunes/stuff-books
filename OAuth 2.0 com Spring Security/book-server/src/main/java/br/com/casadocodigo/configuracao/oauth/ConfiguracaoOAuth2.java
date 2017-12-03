@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -11,6 +12,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory;
 
 import br.com.casadocodigo.configuracao.web.RequestMappingPaths;
 
@@ -66,6 +69,10 @@ public class ConfiguracaoOAuth2 {
 	protected static class OAuth2AuthorizationServer extends AuthorizationServerConfigurerAdapter {
 		@Autowired
 		private	AuthenticationManager authenticationManager;
+		@Autowired
+		private UserDetailsService userDetailsService;
+		@Autowired
+		private ClientDetailsService clientDetailsService;		
 		
 		@Override
 		public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -73,9 +80,13 @@ public class ConfiguracaoOAuth2 {
 			clients.inMemory()
 				.withClient("cliente-app")
 				.secret("123456")
+				// Quais SCOPES o cliente-app tem autorização para solicitar
+				.authorities("read", "write")
 				// Indica que estamos adicionando suporte para o grant type Resource Owner Password Credential e Authorization Code e Implicit
 				// Note que para o caso do implicit a especificação diz que é obrigatório registrar URI de redirecionamento, em um sistema real é mais que obrigatório
-				.authorizedGrantTypes("password", "authorization_code", "implicit")
+				.authorizedGrantTypes("password", "authorization_code", "implicit",
+						"refresh_token")
+				.accessTokenValiditySeconds(120)
 				// Indica que o Client solicita acesso de leitura e escrita nos recursos do usuário
 				.scopes("read",	"write")
 				.resourceIds(RESOURCE_ID)
@@ -89,7 +100,18 @@ public class ConfiguracaoOAuth2 {
 		
 		@Override
 		public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-			endpoints.authenticationManager(authenticationManager);
+			/**
+			 * Quando uma requisição de autorização for criada, os escopos do usuário sejam 
+			 * validados pelo objeto requestFactory. Para que sejam validados, estamos definindo o 
+			 * atributo checkUserScopes como true.
+			 */			
+			DefaultOAuth2RequestFactory requestFactory = new DefaultOAuth2RequestFactory(clientDetailsService);
+			requestFactory.setCheckUserScopes(true);
+
+			endpoints
+				.authenticationManager(authenticationManager)
+				.userDetailsService(userDetailsService)
+				.requestFactory(requestFactory);
 		}		
 	}
 }

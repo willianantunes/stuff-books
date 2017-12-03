@@ -3,6 +3,7 @@ package br.com.casadocodigo.livros.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,6 +24,7 @@ public class LivrosApiController {
     @Autowired
     private UsuarioRepository usuarios;
 
+	@PreAuthorize(value = "#oauth2.hasScope('read')	and	hasRole('ROLE_USUARIO_COMUM')")
     @RequestMapping(method = RequestMethod.GET)
     @CrossOrigin
     public ResponseEntity<?> livros() {
@@ -34,7 +36,6 @@ public class LivrosApiController {
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
-
     }
 
     private Usuario donoDosLivros() {
