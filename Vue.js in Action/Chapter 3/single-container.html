@@ -1,0 +1,29 @@
+<!--
+
+Just as with the v-show directive, it is important to have a single containing element to attach v-if and v-else to,
+especially with the added criterion that the v-else markup MUST REMAIN ADJACENT to the v-if markup.
+
+-->
+
+
+// This won’t work
+<p v-if="showMe">The if text</p>            //
+<p>Some text related to the if text</p>     //
+<p v-else>The else text</p>                 //
+
+// Nor will this
+<div>                                       //
+    <p v-if="showMe">The if text</p>          //
+</div>                                      //
+<div>                                       //
+    <p v-else>The else text</p>               //
+</div>                                      //
+
+// Instead, consider grouping
+<div v-if="showMe">                         //
+    <p>The if text</p>                        //
+    <p>Some text related to the if text</p>   //
+</div>                                      //
+<div v-else>                                //
+    <p>The else text</p>                      //
+</div>                                      //
