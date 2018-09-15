@@ -23,3 +23,9 @@ All the code is available also at the following:
 - https://vuejs.org/v2/api/%23v-once
 - https://vuejs.org/v2/guide/list.html
 - https://vuejs.org/v2/guide/forms.html#Modifiers
+
+### Chapter 5
+
+- https://vuejs.org/v2/guide/class-and-style.html
+- Promise based HTTP client for the browser and node.js: https://github.com/axios/axios
+- https://vuejs.org/v2/guide/list#Mutation-Methods
