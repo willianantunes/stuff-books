@@ -53,7 +53,6 @@
     name: 'imain',
     data() {
       return {
-        products: {},
         cart: []
       };
     },
@@ -100,6 +99,11 @@
 
           return productsArray.sort(compare);
         }
+      },
+      products() {
+        // Keep in mind that because we added the store to the root Vue.js instance
+        // in the main.js file, we don’t have to do any special imports
+        return this.$store.getters.products;
       }
     },
     filters: {
@@ -122,10 +126,7 @@
       }
     },
     created: function () {
-      axios.get('/static/products.json').then(response => {
-        this.products = response.data.products;
-        console.log(this.products);
-      });
+      this.$store.dispatch('initStore');
     }
   };
 </script>
