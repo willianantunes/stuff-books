@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <script src="https://unpkg.com/vuex@3.0.1/dist/vuex.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+<div id="app">
+    <h1>{{header}}</h1>
+    <h2>{{welcome}}</h2>
+    <h3>{{counter}}</h3>
+    <button @click="increment">Press Me</button>
+</div>
+<script>
+    const store = new Vuex.Store({
+        state: {
+            msg: 'Hello World',
+            count: 0
+        },
+        // You can think of mutations like setters in other programming languages
+        mutations: {
+            increment(state) {
+                state.count++;
+            }
+        }
+    });
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                header: 'Vuex App'
+            }
+        },
+        computed: {
+            welcome() {
+                return store.state.msg;
+            },
+            counter() {
+                return store.state.count;
+            }
+        },
+        methods: {
+            increment() {
+                store.commit('increment')
+            }
+        }
+    });
+</script>
+</body>
+</html>

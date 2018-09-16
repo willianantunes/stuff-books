@@ -63,3 +63,7 @@ All the code is available also at the following:
 - https://vuejs.org/v2/guide/render-function.html
 - https://vuejs.org/v2/guide/events.html#Event-Modifiers
 - https://vuejs.org/v2/guide/render-function.html#JSX
+
+### Chapter 10: Vuex state-management library
+
+- https://vuex.vuejs.org/guide/state.html
