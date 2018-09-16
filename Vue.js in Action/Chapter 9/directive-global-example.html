@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+<div id='app'>
+    <p v-style-me:text-center.large="'red'">{{welcome}}</p>
+    <div v-style-me.small>Hi everybody</div>
+    <p v-style-me:text-right.small>Antunes</p>
+</div>
+<script>
+    Vue.directive('style-me', {
+        bind(el, binding) {
+            el.style.color = binding.value || "blue";
+
+            if (binding.modifiers.large)
+                el.style.fontSize = "42px";
+            else if (binding.modifiers.small)
+                el.style.fontSize = "17px"
+
+            el.className = binding.arg;
+        }
+    });
+
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                welcome: 'Hello World'
+            }
+        }
+    });
+</script>
+</body>
+</html>
