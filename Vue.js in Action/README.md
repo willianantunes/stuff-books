@@ -45,3 +45,4 @@ All the code is available also at the following:
 
 - https://vuejs.org/v2/guide/components-slots.html
 - https://vuejs.org/v2/guide/components-dynamic-async.html
+- https://vuejs-templates.github.io/webpack/static.html
