@@ -67,3 +67,4 @@ All the code is available also at the following:
 ### Chapter 10: Vuex state-management library
 
 - https://vuex.vuejs.org/guide/state.html
+- https://vuex.vuejs.org/guide/getters.html

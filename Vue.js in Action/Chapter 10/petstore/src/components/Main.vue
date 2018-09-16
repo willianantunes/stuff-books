@@ -48,6 +48,7 @@
 
 <script>
   import MyHeader from './Header.vue';
+  import {mapGetters} from 'vuex';
 
   export default {
     name: 'imain',
@@ -100,11 +101,10 @@
           return productsArray.sort(compare);
         }
       },
-      products() {
-        // Keep in mind that because we added the store to the root Vue.js instance
-        // in the main.js file, we don’t have to do any special imports
-        return this.$store.getters.products;
-      }
+      // The mapGetters will make sure that all our getters will be added as if they were computed properties
+      ...mapGetters([
+        'products'
+      ])
     },
     filters: {
       formatPrice(price) {
