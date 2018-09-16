@@ -40,3 +40,8 @@ All the code is available also at the following:
 - Keep in mind, that a single colon by itself, `:`, is shorthand for `v-bind`. Just as the at symbol, `@`, is short hand for `v-on`
 - In order to use single file components, Webpack or Browserify is needed to build .vue code.
 - The `.sync` modifier is syntactic sugar for this `<my-component :my-counter="counter" @update:my-counter="val => bar = val"></my-component>`
+
+### Chapter 7
+
+- https://vuejs.org/v2/guide/components-slots.html
+- https://vuejs.org/v2/guide/components-dynamic-async.html
