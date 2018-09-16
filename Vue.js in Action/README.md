@@ -46,3 +46,7 @@ All the code is available also at the following:
 - https://vuejs.org/v2/guide/components-slots.html
 - https://vuejs.org/v2/guide/components-dynamic-async.html
 - https://vuejs-templates.github.io/webpack/static.html
+- https://router.vuejs.org/api/#router-link
+- https://router.vuejs.org/api/#router-view
+- https://router.vuejs.org/guide/advanced/navigation-guards.html
+- https://router.vuejs.org/en/advanced/lazy-loading.html

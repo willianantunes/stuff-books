@@ -38,7 +38,10 @@ export default new Router({
           props: true
         }
       ]
+    },
+    {
+      path: '*',
+      redirect:"/"
     }
-
   ]
 })
