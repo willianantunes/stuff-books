@@ -16,20 +16,27 @@
 
             <button class=" btn btn-primary btn-lg"
                     v-on:click="addToCart(product)"
-                    v-if="canAddToCart(product)">Add to cart</button>
+                    v-if="canAddToCart(product)">Add to cart
+            </button>
             <button disabled="true" class=" btn btn-primary btn-lg"
-                    v-else>Add to cart</button>
-            <span class="inventory-message"
-                  v-if="product.availableInventory - cartCount(product.id) === 0">All Out!</span>
+                    v-else>Add to cart
+            </button>
 
-            <span class="inventory-message"
-                  v-else-if="product.availableInventory - cartCount(product.id) < 5">
-              Only {{product.availableInventory - cartCount(product.id)}} left!</span>
-            <span class="inventory-message" v-else>Buy Now!</span>
+            <transition name="bounce" mode="out-in">
+              <span class="inventory-message"
+                    v-if="product.availableInventory - cartCount(product.id) === 0"
+                    key="0"> Out!All</span>
+
+              <span class="inventory-message"
+                    v-else-if="product.availableInventory - cartCount(product.id) < 5"
+                    key="">
+                Only {{product.availableInventory - cartCount(product.id)}} left!</span>
+              <span class="inventory-message" v-else key="">Buy Now!</span>
+            </transition>
 
             <div class="rating">
-              <span v-bind:class="{'rating-active' :checkRating(n, product)}"
-                    v-for="n in 5">☆</span>
+                <span v-bind:class="{'rating-active' :checkRating(n, product)}"
+                      v-for="n in 5">☆</span>
             </div>
           </div><!-- end of col-md-6-->
         </div><!-- end of row-->
@@ -123,6 +130,28 @@
   };
 </script>
 
-<style scoped>
 
+<style scoped>
+  .bounce-enter-active {
+    animation: shake 0.72s cubic-bezier(.37, .07, .19, .97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+  }
+
+  @keyframes shake {
+    10%, 90% {
+      color: red;
+      transform: translate3d(-1px, 0, 0);
+    }
+    20%, 80% {
+      transform: translate3d(2px, 0, 0);
+    }
+    30%, 50%, 70% {
+      color: red;
+      transform: translate3d(-4px, 0, 0);
+    }
+    40%, 60% {
+      transform: translate3d(4px, 0, 0);
+    }
+  }
 </style>
