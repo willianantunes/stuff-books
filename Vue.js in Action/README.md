@@ -8,15 +8,15 @@ All the code is available also at the following:
 
 ## Notes
 
-### Chapter 2
+### Chapter 2: The Vue instance
 
 - https://vuejs.org/v2/api/#Instance-Methods-Lifecycle
 
-### Chapter 3
+### Chapter 3: Adding interactivity 
 
 - https://dorey.github.io/JavaScript-Equality-Table/
 
-### Chapter 4
+### Chapter 4: Forms and inputs
 
 - https://vuejs.org/v2/guide/forms.html#v-model-with-Components
 - The `v-model` directive is just syntactic sugar. For example `<input v-model="something">` is the same as `<input v-bind:"something" v-on:input="something=$event.target.value">`
@@ -24,13 +24,13 @@ All the code is available also at the following:
 - https://vuejs.org/v2/guide/list.html
 - https://vuejs.org/v2/guide/forms.html#Modifiers
 
-### Chapter 5
+### Chapter 5: Conditionals, looping, and lists
 
 - https://vuejs.org/v2/guide/class-and-style.html
 - Promise based HTTP client for the browser and node.js: https://github.com/axios/axios
 - https://vuejs.org/v2/guide/list#Mutation-Methods
 
-### Chapter 6
+### Chapter 6: Working  with components
 
 - https://vuejs.org/v2/guide/components.html
 - https://vuejs.org/v2/guide/components-registration.html
@@ -41,7 +41,7 @@ All the code is available also at the following:
 - In order to use single file components, Webpack or Browserify is needed to build .vue code.
 - The `.sync` modifier is syntactic sugar for this `<my-component :my-counter="counter" @update:my-counter="val => bar = val"></my-component>`
 
-### Chapter 7
+### Chapter 7: Advanced components and routing
 
 - https://vuejs.org/v2/guide/components-slots.html
 - https://vuejs.org/v2/guide/components-dynamic-async.html
@@ -50,3 +50,8 @@ All the code is available also at the following:
 - https://router.vuejs.org/api/#router-view
 - https://router.vuejs.org/guide/advanced/navigation-guards.html
 - https://router.vuejs.org/en/advanced/lazy-loading.html
+
+### Chapter 8: Transitions and animations
+
+- https://vuejs.org/v2/guide/transitions.html#Transitioning-Single-Elements-Components
+- https://vuejs.org/v2/guide/transitions.html#Transition-Classes

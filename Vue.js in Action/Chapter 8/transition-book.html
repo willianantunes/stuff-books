@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <style>
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity 3.0s ease-out;
+        }
+
+        .fade-enter, .fade-leave-to {
+            opacity: 0;
+        }
+
+        .bounce-enter-active {
+            animation: bounceIn 2s;
+        }
+
+        .bounce-leave-active {
+            animation: bounceIn 2s reverse;
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.1);
+                opacity: 0;
+            }
+            60% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <!-- FADE example -->
+    <div @click="fade.show = !fade.show">
+        <h2>{{fade.title}}</h2>
+    </div>
+    <transition name="fade">
+        <div v-if="fade.show">
+            <h1>{{fade.description}}</h1>
+        </div>
+    </transition>
+
+    <hr />
+
+    <!-- BOUNCE example -->
+    <div @click="bounce.show = !bounce.show">
+        <h2>{{bounce.title}}</h2>
+    </div>
+    <transition name="bounce">
+        <div v-if="bounce.show">
+            <h1>{{bounce.description}}</h1>
+        </div>
+    </transition>
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                fade: {
+                    title: 'War and Peace with FADE',
+                    description: 'FADE Lorem ipsum dolor sit amet, consectetur adipiscing elim',
+                    show: false
+                },
+                bounce: {
+                    title: 'War and Peace with BOUNCE',
+                    description: 'BOUNCE Lorem ipsum dolor sit amet, consectetur adipiscing elim',
+                    show: false
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>
