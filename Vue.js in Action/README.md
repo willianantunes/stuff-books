@@ -55,3 +55,11 @@ All the code is available also at the following:
 
 - https://vuejs.org/v2/guide/transitions.html#Transitioning-Single-Elements-Components
 - https://vuejs.org/v2/guide/transitions.html#Transition-Classes
+
+### Chapter 9: Extending Vue.js
+
+- https://vuejs.org/v2/guide/mixins.html
+- https://vuejs.org/v2/guide/custom-directive.html#Directive-Hook-Arguments
+- https://vuejs.org/v2/guide/render-function.html
+- https://vuejs.org/v2/guide/events.html#Event-Modifiers
+- https://vuejs.org/v2/guide/render-function.html#JSX
