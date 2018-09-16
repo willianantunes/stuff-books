@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    {{counter}}<br/>
+    <button v-on:click="incrementCounter">Increment Counter</button>
+    <my-component v-on:increment-me="incrementCounter"></my-component>
+</div>
+
+<script>
+
+    /**
+     Imagine you’re creating a counter. You want to have a button on the screen that increments the counter by
+     1 every time it’s clicked. However, you’d like to have that button in a child component and the counter
+     in a parent Vue.js instance. You don’t want the counter to mutate inside the child component. Instead,
+     it should notify the parent that the counter should be updated. On every button click, the counter
+     in the parent needs to update.
+     */
+    const MyComponent = {
+        template: `
+            <div>
+                <button
+                    v-on:click="childIncrementCounter">Increment From Child</button>
+            </div>
+        `,
+        methods: {
+            childIncrementCounter() {
+                this.$emit('increment-me');
+            }
+        }
+    };
+
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                counter: 0
+            }
+        },
+        methods: {
+            incrementCounter() {
+                this.counter++;
+            }
+        },
+        components: {'my-component': MyComponent}
+    });
+
+</script>
+</body>
+</html>

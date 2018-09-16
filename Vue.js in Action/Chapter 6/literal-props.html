@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <my-component text="World"></my-component>
+</div>
+<script>
+    const MyComponent = {
+        template: '<div>Hello {{text}}! </div>',
+        props: ['text']
+    };
+    new Vue({
+        el: "#app",
+        components: {'my-component': MyComponent}
+    });
+</script>
+</html>
