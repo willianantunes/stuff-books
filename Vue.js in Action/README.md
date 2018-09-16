@@ -68,3 +68,4 @@ All the code is available also at the following:
 
 - https://vuex.vuejs.org/guide/state.html
 - https://vuex.vuejs.org/guide/getters.html
+- https://vuex.vuejs.org/guide/modules.html
