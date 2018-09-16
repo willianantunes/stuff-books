@@ -75,3 +75,8 @@ All the code is available also at the following:
 - https://vuejs.org/v2/guide/ssr.html
 - Command used to create a fresh new Nuxt project: `vue init nuxt-community/starter-template itunes-search`
     - Dependencies: `npm i -P vuetify axios` and `npm i -D stylus stylus-loader`
+- https://vuetifyjs.com/vuetify/quick-start
+- https://nuxtjs.org/api/context
+- https://nuxtjs.org/guide/routing
+- https://nuxtjs.org/guide/views
+- https://nuxtjs.org/guide/async-data
