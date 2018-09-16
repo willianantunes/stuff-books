@@ -18,7 +18,8 @@
         <p v-html="product.description"></p>
         <p class="price">{{product.price }}</p>
       </div>
-
+      <button @click="edit">Edit Product</button>
+      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -30,6 +31,11 @@
     data() {
       return {
         product: ''
+      }
+    },
+    methods: {
+      edit() {
+        this.$router.push({name: 'Edit'})
       }
     },
     created: function () {
