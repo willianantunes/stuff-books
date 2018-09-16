@@ -69,3 +69,9 @@ All the code is available also at the following:
 - https://vuex.vuejs.org/guide/state.html
 - https://vuex.vuejs.org/guide/getters.html
 - https://vuex.vuejs.org/guide/modules.html
+
+### Chapter 11: Communicating with a server
+
+- https://vuejs.org/v2/guide/ssr.html
+- Command used to create a fresh new Nuxt project: `vue init nuxt-community/starter-template itunes-search`
+    - Dependencies: `npm i -P vuetify axios` and `npm i -D stylus stylus-loader`
